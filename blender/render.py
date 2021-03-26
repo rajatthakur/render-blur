@@ -18,7 +18,7 @@ def ensure_blender(blender=None):
             print("Restarting with Blender...")
             sys.stdout.flush()
             sys.stderr.flush()
-            subprocess.run([blender, "--background", "--python", sys.argv[0], "--"] + sys.argv[1:])
+            subprocess.run([blender, "--background", "-noaudio", "--python", sys.argv[0], "--"] + sys.argv[1:])
             sys.exit()
         else:
             sys.exit("Failed to import bpy. Please run with Blender.")
