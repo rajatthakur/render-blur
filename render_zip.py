@@ -7,6 +7,7 @@ from datetime import datetime
 
 # enable importing from current dir when running with Blender
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from settings import *
 
 from blender import render
 from blender import utils
