@@ -58,7 +58,7 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
     scene.eevee.motion_blur_steps = mblur
 
 
-def render(output, obj, tex, loc, rot, blurs=[(0, -1)]):
+def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False):
     ensure_blender()
     scene = bpy.context.scene
 
@@ -113,6 +113,14 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)]):
             bpy.ops.render.render(write_still=True)
         scene.frame_current = scene.frame_start
 
+        if render_backside:
+            scene.eevee.use_motion_blur = False
+            obj.rotation_euler = rot[0]
+            obj.rotation_euler[0] += 3.1415926535897932384626433
+            obj.keyframe_insert("rotation_euler")
+            scene.render.filepath = os.path.join(tmp, "frame_rot")
+            bpy.ops.render.render(write_still=True)
+
         # pack to webp
         fs = sorted([os.path.join(tmp, f) for f in os.listdir(tmp)])
         Image.open(fs[0]).save(
@@ -122,7 +130,7 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)]):
             append_images=(Image.open(f) for f in fs[1:]),
             method=4,
             quality=75,
-            duration=[1000] * len(blurs) + [33] * (scene.frame_end + 1),
+            duration=[1000] * len(blurs) + [33] * (scene.frame_end + 1 + int(render_backside)),
             minimize_size=True,
         )
 

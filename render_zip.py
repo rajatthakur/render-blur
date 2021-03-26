@@ -27,8 +27,9 @@ p = dict(
     blurs=[(0, 10), (-11, -1)],
     z_range=(-8, -3),
     delta_z=1,
-    delta_xy=(1, 3),
+    delta_xy=(0.5, 3),
     max_rot=np.pi / 8,
+    render_backside=True,
 )
 
 
@@ -49,7 +50,7 @@ with zipfile.ZipFile(os.path.join(out_dir, filename), "w") as zip:
         name = f"{i:04}.webp"
         with objs.as_tempfile(obj) as objf, texs.as_tempfile(tex) as texf:
             with zip.open(name, "w") as out:
-                render.render(out, objf, texf, loc, (rot_start, rot_end), p["blurs"])
+                render.render(out, objf, texf, loc, (rot_start, rot_end), p["blurs"],p["render_backside"])
         zip.getinfo(name).comment = json.dumps({"obj": obj, "tex": tex}).encode()
 
 duration = datetime.now() - time
