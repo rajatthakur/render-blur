@@ -8,18 +8,17 @@ from datetime import datetime
 # enable importing from current dir when running with Blender
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 
-from defmo import render
-from defmo import utils
-
+from blender import render
+from blender import utils
 
 # restart with Blender if necessary
-args = render.ensure_blender(r"C:\Program Files\Blender Foundation\Blender 2.91\blender.exe")
+args = render.ensure_blender(g_blender_path)
 
 n_sequences = int(args[0]) if len(args) else 5
 out_dir = args[1] if len(args) > 1 else "."
 
-objs = utils.ZipLoader("data/ShapeNetCore.v2.zip", "*.obj", balance_subdirs=True)
-texs = utils.ZipLoader("data/textures.zip", "*/textures_train/*.jpg")
+objs = utils.ZipLoader(g_shapenet_path, "*.obj", balance_subdirs=True)
+texs = utils.ZipLoader(g_texture_path, "*/textures_train/*.jpg")
 
 p = dict(
     resolution=(320, 240),
