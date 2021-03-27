@@ -17,8 +17,14 @@ args = render.ensure_blender(g_blender_path)
 
 n_sequences = int(args[0]) if len(args) else 5
 out_dir = args[1] if len(args) > 1 else "."
+do_shapenet = args[2] if len(args) > 2 else 1
 
-objs = utils.ZipLoader(g_shapenet_path, "*.obj", balance_subdirs=True)
+if do_shapenet:
+    obj_path = g_shapenet_path
+else:
+    obj_path = g_spheres_path
+
+objs = utils.ZipLoader(obj_path, "*.obj", balance_subdirs=True)
 texs = utils.ZipLoader(g_texture_path, "*/textures_train/*.jpg")
 
 p = dict(
