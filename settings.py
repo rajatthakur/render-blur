@@ -4,7 +4,7 @@ g_texture_path = "/cluster/home/denysr/scratch/dataset/ShapeNetv2/textures.zip"
 g_blender_path = r"/cluster/scratch/denysr/src/blender-2.91.0-linux64/blender"
 
 import os 
-if not os.path.exist(g_shapenet_path):
+if not os.path.exists(g_shapenet_path):
 	g_shapenet_path = "/home/denysr/data/ShapeNetCore.v2.zip"
 	g_texture_path = "/home/denysr/data/textures.zip"
 	g_blender_path = r"/home/denysr/Programs/blender-2.91.0-linux64/blender"
