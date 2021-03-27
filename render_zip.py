@@ -42,6 +42,7 @@ filename = time.strftime(f"fmo_{len(p['blurs'])}_{p['n_frames']}_%y%m%d%H%M%S.zi
 with zipfile.ZipFile(os.path.join(out_dir, filename), "w") as zip:
     zip.comment = json.dumps(p).encode()
     for i in range(n_sequences):
+        print(f"Rendering {i} / {n_sequences} sequence.")
         obj = objs.get_random()
         tex = texs.get_random()
         loc = frustum.gen_point_pair(p["delta_z"], p["delta_xy"])
