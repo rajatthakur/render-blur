@@ -19,11 +19,11 @@ n_sequences = int(args[0]) if len(args) else 5
 out_dir = args[1] if len(args) > 1 else "."
 do_shapenet = args[2] if len(args) > 2 else 1
 
-if do_shapenet:
+if do_shapenet > 0:
     obj_path = g_shapenet_path
 else:
     obj_path = g_spheres_path
-print(do_shapenet)
+print(obj_path)
 
 objs = utils.ZipLoader(obj_path, "*.obj", balance_subdirs=True)
 texs = utils.ZipLoader(g_texture_path, "*/textures_train/*.jpg")
