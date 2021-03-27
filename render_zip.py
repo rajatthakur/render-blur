@@ -23,7 +23,6 @@ if do_shapenet:
     obj_path = g_shapenet_path
 else:
     obj_path = g_spheres_path
-print(obj_path)
 
 objs = utils.ZipLoader(obj_path, "*.obj", balance_subdirs=True)
 texs = utils.ZipLoader(g_texture_path, "*/textures_train/*.jpg")
