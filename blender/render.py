@@ -38,7 +38,8 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
     scene.camera.location = 0, 0, 0
     scene.camera.rotation_euler = 0, 0, 0
     scene.objects["Light"].location = 0, 0, 0
-
+    scene.objects["Light"].data.energy = 0
+    
     # environment lighting
     bpy.context.scene.world.use_nodes = False
     bpy.context.scene.world.color = env_light

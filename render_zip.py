@@ -31,15 +31,15 @@ p = dict(
     resolution=(320, 240),
     n_frames=24,
     blurs=[(0, 10), (-11, -1)],
-    z_range=(-8, -3),
+    z_range=(-6, -2),
     delta_z=1,
-    delta_xy=(0.5, 3),
-    max_rot=np.pi / 8,
+    delta_xy=(0.3, 1.5),
+    max_rot=np.pi / 6,
     render_backside=True,
 )
 
 
-render.init(p["n_frames"], p["resolution"])
+render.init(p["n_frames"], p["resolution"],40,(0.6, 0.6, 0.6))
 frustum = render.Frustum(p["z_range"], p["resolution"])
 
 time = datetime.now()
