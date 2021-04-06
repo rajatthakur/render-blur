@@ -47,10 +47,11 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
     # remove default cube
     bpy.ops.object.delete()
     bpy.data.objects.remove(scene.objects["Light"])
-    
+
     # create material for texture
     mat = bpy.data.materials.new("Texture")
     mat.use_nodes = True
+    mat.use_fake_user = True
     nodes = mat.node_tree.nodes
     tex = nodes.new("ShaderNodeTexImage")
     mat.node_tree.links.new(tex.outputs[0], nodes["Principled BSDF"].inputs[0])
