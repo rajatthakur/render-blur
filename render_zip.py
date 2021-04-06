@@ -31,7 +31,7 @@ p = dict(
     resolution=(320, 240),
     n_frames=24,
     blurs=[(0, 10), (-11, -1)],
-    z_range=(-6, -2),
+    z_range=(-6, -3),
     delta_z=1,
     delta_xy=(0.3, 1.5),
     max_rot=np.pi / 6,
@@ -59,7 +59,7 @@ with zipfile.ZipFile(os.path.join(out_dir, filename), "w") as zip:
             with zip.open(name, "w") as out:
                 render.render(out, objf, texf, loc, (rot_start, rot_end), p["blurs"],p["render_backside"])
         zip.getinfo(name).comment = json.dumps({"obj": obj, "tex": tex}).encode()
-
+        print(tex)
 duration = datetime.now() - time
 print(
     f"Rendered {n_sequences} sequences in {duration}, "
