@@ -46,7 +46,8 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
 
     # remove default cube
     bpy.ops.object.delete()
-
+    bpy.data.objects.remove(scene.objects["Light"])
+    
     # create material for texture
     mat = bpy.data.materials.new("Texture")
     mat.use_nodes = True
@@ -187,8 +188,10 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
 
     # clean up
     bpy.ops.object.delete()
-    if tex:
-        bpy.data.images.remove(tex)
+    for collection in [bpy.data.meshes, bpy.data.materials, bpy.data.images]:
+        for block in collection:
+            if not block.users:
+                collection.remove(block)
 
 
 class Frustum:
