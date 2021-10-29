@@ -3,6 +3,7 @@ import sys
 import random
 import tempfile
 from PIL import Image
+import pdb
 
 
 def ensure_blender(blender=None):

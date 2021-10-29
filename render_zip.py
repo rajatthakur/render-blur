@@ -18,7 +18,7 @@ args = render.ensure_blender(g_blender_path)
 n_sequences = int(args[0]) if len(args) else 5
 out_dir = args[1] if len(args) > 1 else "."
 do_shapenet = int(args[2]) if len(args) > 2 else 1
-
+do_shapenet = False
 if do_shapenet:
     obj_path = g_shapenet_path
 else:
