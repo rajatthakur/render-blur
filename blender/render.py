@@ -129,7 +129,7 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
         obj.data.materials.append(mat)
         bpy.context.view_layer.objects.active = obj
         bpy.ops.object.editmode_toggle()
-        bpy.ops.uv.cube_project(scale_to_bounds=True)
+        # bpy.ops.uv.cube_project(scale_to_bounds=True) TODO: uncomment this
         bpy.ops.object.editmode_toggle()
 
     # starting position
