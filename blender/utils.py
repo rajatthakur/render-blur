@@ -10,7 +10,7 @@ from contextlib import contextmanager
 class ZipLoader:
     def __init__(self, zip, filter="*[!/]", balance_subdirs=False):
         self.zip = ZipFile(zip)
-        self.names = fnmatch.filter(self.zip.namelist(), filter)
+        self.names = [s for s in fnmatch.filter(self.zip.namelist(), filter) if s.find('MAC') < 0]
         self.dirtree = None
 
         if balance_subdirs:

@@ -107,6 +107,7 @@ def crop_image(orig_img, cropped_min_x, cropped_max_x, cropped_min_y, cropped_ma
 
     return cropped_img
 
+
 def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, crop_tex=True):
     ensure_blender()
     scene = bpy.context.scene
@@ -114,7 +115,7 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
     # load object
     bpy.ops.import_scene.obj(filepath=obj)
     obj = bpy.context.selected_objects[0]
-
+    obj.scale = (1 / obj.dimensions[0], 1 / obj.dimensions[0], 1 / obj.dimensions[0])
     # load texture
     if tex:
         tex = bpy.data.images.load(os.path.abspath(tex))
@@ -129,7 +130,7 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
         obj.data.materials.append(mat)
         bpy.context.view_layer.objects.active = obj
         bpy.ops.object.editmode_toggle()
-        # bpy.ops.uv.cube_project(scale_to_bounds=True) TODO: uncomment this
+        bpy.ops.uv.cube_project(scale_to_bounds=True)
         bpy.ops.object.editmode_toggle()
 
     # starting position

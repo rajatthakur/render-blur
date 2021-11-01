@@ -1,4 +1,4 @@
-g_objects_path = "resources/objects.zip"
+g_objects_path = "resources/all_objs.zip"
 g_texture_path = "resources/textures.zip"
 g_blender_path = r"/Applications/Blender.app/Contents/MacOS/Blender"
 

@@ -5,6 +5,7 @@ import zipfile
 import numpy as np
 from datetime import datetime
 import csv
+import pdb
 
 # enable importing from current dir when running with Blender
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
