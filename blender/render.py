@@ -11,7 +11,7 @@ def ensure_blender(blender=None):
         global bpy
         import bpy
 
-        return sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
+        return sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     except ImportError:
         if blender:
             import subprocess
@@ -40,7 +40,7 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
     scene.camera.rotation_euler = 0, 0, 0
     scene.objects["Light"].location = 0, 0, 0
     scene.objects["Light"].data.energy = 0
-    
+
     # environment lighting
     bpy.context.scene.world.use_nodes = False
     bpy.context.scene.world.color = env_light
@@ -61,6 +61,7 @@ def init(frames, resolution, mblur=40, env_light=(0.5, 0.5, 0.5)):
     scene.eevee.motion_blur_position = "START"
     scene.eevee.motion_blur_steps = mblur
 
+
 def crop_image(orig_img, cropped_min_x, cropped_max_x, cropped_min_y, cropped_max_y):
     '''Crops an image object of type <class 'bpy.types.Image'>.  For example, for a 10x10 image, 
     if you put cropped_min_x = 2 and cropped_max_x = 6,
@@ -74,11 +75,11 @@ def crop_image(orig_img, cropped_min_x, cropped_max_x, cropped_min_y, cropped_ma
     Returns: An image of type  <class 'bpy.types.Image'>
     '''
 
-    num_channels=orig_img.channels
-    #calculate cropped image size
+    num_channels = orig_img.channels
+    # calculate cropped image size
     cropped_size_x = cropped_max_x - cropped_min_x
     cropped_size_y = cropped_max_y - cropped_min_y
-    #original image size
+    # original image size
     orig_size_x = orig_img.size[0]
     orig_size_y = orig_img.size[1]
 
@@ -86,23 +87,23 @@ def crop_image(orig_img, cropped_min_x, cropped_max_x, cropped_min_y, cropped_ma
 
     print("Exctracting image fragment, this could take a while...")
 
-    #loop through each row of the cropped image grabbing the appropriate pixels from original
-    #the reason for the strange limits is because of the 
-    #order that Blender puts pixels into a 1-D array.
+    # loop through each row of the cropped image grabbing the appropriate pixels from original
+    # the reason for the strange limits is because of the
+    # order that Blender puts pixels into a 1-D array.
     current_cropped_row = 0
     for yy in range(orig_size_y - cropped_max_y, orig_size_y - cropped_min_y):
-        #the index we start at for copying this row of pixels from the original image
-        orig_start_index = (cropped_min_x + yy*orig_size_x) * num_channels
-        #and to know where to stop we add the amount of pixels we must copy
+        # the index we start at for copying this row of pixels from the original image
+        orig_start_index = (cropped_min_x + yy * orig_size_x) * num_channels
+        # and to know where to stop we add the amount of pixels we must copy
         orig_end_index = orig_start_index + (cropped_size_x * num_channels)
-        #the index we start at for the cropped image
-        cropped_start_index = (current_cropped_row * cropped_size_x) * num_channels 
+        # the index we start at for the cropped image
+        cropped_start_index = (current_cropped_row * cropped_size_x) * num_channels
         cropped_end_index = cropped_start_index + (cropped_size_x * num_channels)
 
-        #copy over pixels 
-        cropped_img.pixels[cropped_start_index : cropped_end_index] = orig_img.pixels[orig_start_index : orig_end_index]
+        # copy over pixels
+        cropped_img.pixels[cropped_start_index: cropped_end_index] = orig_img.pixels[orig_start_index: orig_end_index]
 
-        #move to the next row before restarting loop
+        # move to the next row before restarting loop
         current_cropped_row += 1
 
     return cropped_img
@@ -121,9 +122,9 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
         tex = bpy.data.images.load(os.path.abspath(tex))
         if crop_tex:
             res = 32
-            cx = random.randint(0,tex.size[0]-res-1)
-            cy = random.randint(0,tex.size[1]-res-1)
-            tex = crop_image(tex, cx, cx+res, cy, cy+res)
+            cx = random.randint(0, tex.size[0] - res - 1)
+            cy = random.randint(0, tex.size[1] - res - 1)
+            tex = crop_image(tex, cx, cx + res, cy, cy + res)
         mat = bpy.data.materials["Texture"]
         mat.node_tree.nodes["Image Texture"].image = tex
         obj.data.materials.clear()
@@ -199,7 +200,7 @@ def render(output, obj, tex, loc, rot, blurs=[(0, -1)], render_backside=False, c
 
 class Frustum:
     def __init__(
-        self, z_range, resolution, max_radius=0.6, dead_zone=0.05, focal_length=50, sensor_size=36
+            self, z_range, resolution, max_radius=0.6, dead_zone=0.05, focal_length=50, sensor_size=36
     ):
         self.tan = (1 - dead_zone) * sensor_size / focal_length / 2
         self.offset = max_radius / self.tan * (self.tan ** 2 + 1) ** 0.5
